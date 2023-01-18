@@ -1,16 +1,13 @@
 from rest_framework import serializers
-from cart.models import Cart, CartItem
+from cart.models import Order
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
-class Cartserializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Cart
-        fields = '__all__'
-
-class CartItemSerializer(serializers.ModelSerializer):
+class OrdersSerializer(serializers.ModelSerializer):
+    user = serializers.ReadOnlyField(source='user.email')
 
     class Meta:
-        model = CartItem
+        model = Order
         fields = '__all__'
-        
