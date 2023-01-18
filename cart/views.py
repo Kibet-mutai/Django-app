@@ -4,6 +4,7 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from cart.serializers import CartItemSerializer, Cartserializer
 from cart.models import Cart, CartItem
+from Shop.models import product
 
 # Create your views here.
 
@@ -14,7 +15,8 @@ def cart_items(request):
     return Response(serializer.data)
 
 @api_view(['POST'])
-def add_to_cart(request):
+def add_to_cart(request, id):
+    products = product.objects.get(id=id)
     serializer = CartItemSerializer(many=True)
     if serializer.is_valid():
         serializer.save()
